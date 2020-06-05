@@ -18,14 +18,19 @@ def read_adult():
     adult_test.income = adult_test.income.str.split(".", expand=True)[0]
 
     #Fusion des deux jeux de données 
-    adult = pd.concat((adult_data, adult_test), axis=0)
+    adult = pd.concat((adult_data, adult_test), axis=0).reset_index()
 
     #Conversion des variables qualitatives en category
-    adult.workclass = pd.Categorical(adult.workclass)
+    workclass_type = pd.Categorical(adult["workclass"].dropna().unique()).add_categories(["Unknown"])
+    #adult["workclass"] = adult["workclass"].astype(workclass_type)
+
     adult.education = pd.Categorical(adult.education)
-    adult["marital-status"] = pd.Categorical(adult["marital-status"])
-    adult.occupation = pd.Categorical(adult.occupation)
-    adult.relationship = pd.Categorical(adult.relationship)
+    #adult["marital-status"] = pd.Categorical(adult["marital-status"])
+
+    occupation_type = pd.Categorical(adult["occupation"].dropna().unique()).add_categories(["Unknown"])
+    #adult["occupation"] = adult["occupation"].astype(workclass_type)
+    
+    #adult.relationship = pd.Categorical(adult.relationship)
     adult.race = pd.Categorical(adult.race)
     adult.sex = pd.Categorical(adult.sex)
     adult["native-country"] = pd.Categorical(adult["native-country"])

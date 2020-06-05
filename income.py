@@ -11,12 +11,13 @@ adult["US-born"] = (adult["native-country"] == "United-States")
 
 #income
 sns.catplot(
-    x="income",
+    x="occupation",
     kind="count",
     data=adult
 )
-plt.title("Distribution de la variable income")
-plt.show()
+plt.xticks(rotation=45)
+plt.title("Distribution de la variable occupation")
+#plt.show()
 
 #education vs education-num
 ax = sns.barplot(
@@ -246,3 +247,14 @@ sns.catplot(
 plt.title("US-born vs income")
 #plt.xticks(rotation=45)
 #plt.show()
+
+#capital-gain et capital-loss
+total = 0
+sup = 0
+for i in range(len(adult)):
+    if adult.loc[i, "capital-loss"] != 0:
+        if adult.loc[i, "income"] == ">50K":
+            sup += 1
+        total += 1
+
+print(sup / total)
